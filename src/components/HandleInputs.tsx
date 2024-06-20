@@ -126,7 +126,7 @@ const InputModel: React.FC<HandleInputsProps> = ({nextPage}) => {
     }
 
     for (let i = 0; i < bias!.length; i++) {
-      namedModel.push({name: "b1_" + i, value: Math.floor(bias![i] * 4096 * 4096).toString()});
+      namedModel.push({name: "b1_" + i, value: Math.floor(bias![i] * 4096 * 256).toString()});
     }
 
     // console.log(namedModel);

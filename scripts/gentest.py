@@ -11,11 +11,11 @@ inputs:
 for i in range(10):
     for j in range(784):
         print(f"    w1_{i}_{j}:")
-        print(f"      SecretInteger: '{int(sd["fc.weight"][i][j] * (2**12))}'")
+        print(f"      SecretInteger: '{int(sd["fc.weight"][i][j] * (4096)) + 20000}'")
 
 for i in range(10):
     print(f"    b1_{i}:")
-    print(f"      SecretInteger: '{int(sd["fc.bias"][i] * (2**24))}'")
+    print(f"      SecretInteger: '{int(sd["fc.bias"][i] * (4096*256))}'")
 
 # this is an image for 7
 image = torch.tensor([[[0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000,
@@ -135,7 +135,7 @@ image = image.flatten()
 
 for i in range(784):
     print(f"    x_{i}:")
-    print(f"      SecretInteger: '{int(image[i] * (2**12))}'")
+    print(f"      SecretInteger: '{int(image[i] * (256)) + 1}'")
   
 print("""  public_variables: {}
 expected_outputs:

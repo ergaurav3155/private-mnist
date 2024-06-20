@@ -51,7 +51,7 @@ def nada_main():
     for i in range(10):
         w1.append([])
         for j in range(784):
-            w1[i].append(SecretInteger(Input(name="w1_" + str(i) + "_" + str(j), party=weight_party)))
+            w1[i].append(SecretInteger(Input(name="w1_" + str(i) + "_" + str(j), party=weight_party)) - Integer(20000))
     
     b1 = []
     for i in range(10):
@@ -59,7 +59,7 @@ def nada_main():
 
     x = []
     for i in range(784):
-        x.append(SecretInteger(Input(name="x_" + str(i), party=input_party)))
+        x.append(SecretInteger(Input(name="x_" + str(i), party=input_party)) - Integer(1))
     
     y = matmul(w1, x)
     y = add(y, b1)
