@@ -10,6 +10,7 @@ import { ConnectWallet } from "./components/ConnectWallet";
 import { CreateOrJoin } from "./components/CreateOrJoin";
 import { HomePage } from "./components/HomePage";
 import { HandleInputs } from "./components/HandleInputs";
+import { Results } from "./components/Results";
 
 const config = {
   initialColorMode: "dark",
@@ -105,6 +106,7 @@ export const App = () => {
       <ConnectWallet nextPage={nextPage} />
       <CreateOrJoin nextPage={nextPage} />
       <HandleInputs nextPage={nextPage} />
+      <Results nextPage={nextPage} />
     </HStack>
 
     <Button size="lg" position={"fixed"} left={10} bottom={"50%"} borderRadius={30} isDisabled={page===0} onClick={() => setPage(p => p === 0 ? p : (p - 1))}>

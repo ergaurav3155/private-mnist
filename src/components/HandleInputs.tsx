@@ -15,51 +15,6 @@ import { UserContext } from "../App";
 import { storeSecretsInteger } from "../nillion/storeSecretsInteger";
 import * as zip from "@zip.js/zip.js";
 
-// const submitCalendar = async () => {
-//   setLoading(true);
-//   await storeSecretsInteger(
-//     nillion,
-//     nillionClient,
-//     calender.flat().map((v, i) => { return {name: "calender_p" + partyBit + "_h" + i, value: (v+1).toString()} }),
-//     programId,
-//     "Party" + partyBit,
-//     [], [], [],
-//     (partyBit === 0) ? [] : [host],
-//   ).then(async (store_id: string) => {
-//     console.log("Secret stored at store_id:", store_id);
-//     if (partyBit === 0)
-//       setCal0store(store_id);
-//     if (partyBit === 1) {
-//       setCal1store(store_id);
-//       setCal0store("hehe");
-//       const SignalingChannel = require("../signalling/signaling");
-//       const peerId = programId + "-other";
-//       const signalingServerUrl = "http://kanav.eastus.cloudapp.azure.com:3030/";
-//       const token = "SIGNALING123";
-//       const channel = new SignalingChannel(peerId, signalingServerUrl, token);
-//       channel.onMessage = (message: any) => {
-//         console.log("Got message: ");
-//         console.log(message);
-//         if (message.from === programId) {
-//           if (message.message) {
-//             if (message.message.result) {
-//               setResult(message.message.result)
-//             }
-//             if (message.message.fin)
-//               nextPage();
-//           }
-//         }
-//       };
-//       channel.connect();
-//       channel.sendTo(programId, {store_id, party_id: nillionClient.party_id});
-//       setSignalingChannel(channel);
-//     }
-//     setLoading(false);
-//     nextPage();
-//   });
-// }
-
-
 interface HandleInputsProps {
   nextPage: () => void;
 }
@@ -170,7 +125,7 @@ const InputImage: React.FC<HandleInputsProps> = ({nextPage}) => {
   const [loading, setLoading] = useState(false);
   const [canvas, setCanvas] = useState<any>(null);
   // const [image, setImage] = useState<Float32Array | null>(null);
-  const { nillion, nillionClient, setImageStore, programId, partyBit, host, setSignalingChannel, setResult } = React.useContext(UserContext);
+  const { nillion, nillionClient, setImageStore, setModelStore, programId, partyBit, host, setSignalingChannel, setResult } = React.useContext(UserContext);
 
   const submitImage = async () => {
     setLoading(true);
@@ -187,7 +142,7 @@ const InputImage: React.FC<HandleInputsProps> = ({nextPage}) => {
     const {data} = ctxScaled.getImageData(0, 0, 28, 28)
 
     for (let i = 0; i < 28*28; i++) {
-      namedImage.push({name: "x_" + i , value: (data[i * 4] + 1).toString()});
+      namedImage.push({name: "x_" + i , value: (256 - data[i * 4]).toString()});
     }
 
     console.log(namedImage);
@@ -217,8 +172,8 @@ const InputImage: React.FC<HandleInputsProps> = ({nextPage}) => {
           if (message.message.result) {
             setResult(message.message.result)
           }
-          if (message.message.fin)
-            nextPage();
+          // if (message.message.fin)
+          //   nextPage();
         }
       }
     };
@@ -226,6 +181,7 @@ const InputImage: React.FC<HandleInputsProps> = ({nextPage}) => {
     channel.sendTo("mnist-" + programId, {store_id, party_id: nillionClient.party_id});
     setSignalingChannel(channel);
     setImageStore(store_id);
+    setModelStore("hehe");
     setLoading(false);
     nextPage();
   }

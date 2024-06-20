@@ -69,7 +69,7 @@ def nada_main():
     y = argmax(y)
 
     outputs: list[Output] = [
-        Output(y, "label", input_party)
+        Output(y, "label", weight_party)
     ]
 
     return outputs
