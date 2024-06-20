@@ -10,7 +10,7 @@ export async function storeProgram(nillionClient: any, programName: string): Pro
     const uint8Program = new Uint8Array(arrayBufferProgram);
 
     // store program
-    console.log("storing program", programName, uint8Program);
+    console.log("storing program", programName);
     const instanceName = programName + "-" + Date.now().toString();
     const action_id = await nillionClient.store_program(nillionConfig.cluster_id, instanceName, uint8Program);
     console.log("Stored program - action_id", action_id);
